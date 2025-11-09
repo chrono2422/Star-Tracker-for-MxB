@@ -49,3 +49,7 @@ export default function App() {
         <footer className="footer">
           <small>Made with ❤️ for MxB</small>
         </footer>
+      </div>
+    </Router>
+  );
+}
