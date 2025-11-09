@@ -1,99 +1,40 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import AddMember from "./pages/AddMember";
+import ViewRewards from "./pages/ViewRewards";
+import EditRewards from "./pages/EditRewards";
+import History from "./pages/History";
 import "./App.css";
 
-function App() {
-  const [members, setMembers] = useState([
-    { id: 1, name: "MxB Member 1", stars: 3, rewards: ["Badge A"] },
-    { id: 2, name: "MxB Member 2", stars: 5, rewards: ["Badge B", "Gift Card"] },
-  ]);
-
-  const updateName = (id, newName) => {
-    setMembers((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, name: newName } : m))
-    );
-  };
-
-  const addStar = (id) => {
-    setMembers((prev) =>
-      prev.map((m) =>
-        m.id === id ? { ...m, stars: m.stars + 1 } : m
-      )
-    );
-  };
-
-  const addReward = (id) => {
-    const newReward = prompt("Enter new reward name:");
-    if (!newReward) return;
-    setMembers((prev) =>
-      prev.map((m) =>
-        m.id === id ? { ...m, rewards: [...m.rewards, newReward] } : m
-      )
-    );
-  };
-
-  const editReward = (id, index) => {
-    const newName = prompt("Edit reward name:");
-    if (!newName) return;
-    setMembers((prev) =>
-      prev.map((m) =>
-        m.id === id
-          ? {
-              ...m,
-              rewards: m.rewards.map((r, i) =>
-                i === index ? newName : r
-              ),
-            }
-          : m
-      )
-    );
-  };
-
-  const deleteReward = (id, index) => {
-    if (!confirm("Remove this reward?")) return;
-    setMembers((prev) =>
-      prev.map((m) =>
-        m.id === id
-          ? { ...m, rewards: m.rewards.filter((_, i) => i !== index) }
-          : m
-      )
-    );
-  };
-
+export default function App() {
   return (
-    <div className="app-container">
-      <h1>🌟 Star Tracker for MxB</h1>
-      <div className="members-container">
-        {members.map((member) => (
-          <div key={member.id} className="member-card">
-            <input
-              type="text"
-              value={member.name}
-              onChange={(e) => updateName(member.id, e.target.value)}
-              className="name-input"
-            />
-            <p>⭐ Stars: {member.stars}</p>
-            <button onClick={() => addStar(member.id)}>+ Add Star</button>
+    <Router>
+      <div className="site-shell">
+        <header className="topbar">
+          <h1 className="brand">🌸 Star Tracker</h1>
+          <nav className="nav">
+            <Link to="/" className="nav-link">Home</Link>
+            <Link to="/rewards" className="nav-link">View Rewards</Link>
+            <Link to="/edit-rewards" className="nav-link">Edit Rewards</Link>
+            <Link to="/add-member" className="nav-link">Add Member</Link>
+            <Link to="/history" className="nav-link">History</Link>
+          </nav>
+        </header>
 
-            <div className="rewards">
-              <h4>🎁 Rewards:</h4>
-              <ul>
-                {member.rewards.map((r, i) => (
-                  <li key={i} className="reward-item">
-                    <span>{r}</span>
-                    <div className="reward-actions">
-                      <button onClick={() => editReward(member.id, i)}>✏️</button>
-                      <button onClick={() => deleteReward(member.id, i)}>🗑️</button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => addReward(member.id)}>+ Add Reward</button>
-            </div>
-          </div>
-        ))}
+        <main className="main-area">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/add-member" element={<AddMember />} />
+            <Route path="/rewards" element={<ViewRewards />} />
+            <Route path="/edit-rewards" element={<EditRewards />} />
+            <Route path="/history" element={<History />} />
+          </Routes>
+        </main>
+
+        <footer className="footer">
+          <small>Made with ❤️ for MxB</small>
+        </footer>
       </div>
-    </div>
+    </Router>
   );
 }
-
-export default App;
