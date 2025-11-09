@@ -8,7 +8,8 @@ import EditRewards from "./pages/EditRewards";
 import History from "./pages/History";
 import Auth from "./pages/Auth";
 import Login from "./pages/Login"; // ✅ ADD THIS LINE
-import "./App.css";
+import "./App.css";import EditMember from "./pages/EditMember";
+
 
 function PrivateRoute({ children }) {
   const [user, loading] = useAuthState(auth);
@@ -28,6 +29,7 @@ export default function App() {
             <Link to="/edit-rewards">Edit Rewards</Link>
             <Link to="/add-member">Add Member</Link>
             <Link to="/history">History</Link>
+              <Link to="/edit-member">Edit Member</Link>
           </nav>
         </header>
 
@@ -40,6 +42,7 @@ export default function App() {
             {/* Protected routes */}
             <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/add-member" element={<PrivateRoute><AddMember /></PrivateRoute>} />
+              <Route path="/edit-member" element={<PrivateRoute><EditMember /></PrivateRoute>} />
             <Route path="/rewards" element={<PrivateRoute><ViewRewards /></PrivateRoute>} />
             <Route path="/edit-rewards" element={<PrivateRoute><EditRewards /></PrivateRoute>} />
             <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
