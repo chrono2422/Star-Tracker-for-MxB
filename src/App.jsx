@@ -7,6 +7,7 @@ import ViewRewards from "./pages/ViewRewards";
 import EditRewards from "./pages/EditRewards";
 import History from "./pages/History";
 import Auth from "./pages/Auth";
+import Login from "./pages/Login"; // ✅ ADD THIS LINE
 import "./App.css";
 
 function PrivateRoute({ children }) {
@@ -32,7 +33,11 @@ export default function App() {
 
         <main className="main-area">
           <Routes>
+            {/* Public routes */}
             <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Login />} /> {/* ✅ ADD THIS LINE */}
+
+            {/* Protected routes */}
             <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/add-member" element={<PrivateRoute><AddMember /></PrivateRoute>} />
             <Route path="/rewards" element={<PrivateRoute><ViewRewards /></PrivateRoute>} />
@@ -44,7 +49,3 @@ export default function App() {
         <footer className="footer">
           <small>Made with ❤️ for MxB</small>
         </footer>
-      </div>
-    </Router>
-  );
-}
